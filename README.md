@@ -63,7 +63,7 @@ be able to compile correctly.
 Then, produce an assembly file from the compiler by invoking it:
 
 ```sh
-$ ./main.py out.s
+$ ./main.py in.s out.s
 ```
 
 #### Step 3: Link the program with the runtime library
