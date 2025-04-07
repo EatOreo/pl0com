@@ -1,63 +1,63 @@
 digraph G {
-140204191968016 [label="BB140204191968016{\nreg int t0 <- 1\nreg int t1 <- minus reg int t0\nglobal int x; _g_x: def byte 4 <- reg int t1\nread reg int t2\nglobal int x; _g_x: def byte 4 <- reg int t2\nreg int t3 <- global int x; _g_x: def byte 4\nreg int t4 <- 100\nreg int32_t t5 <- reg int t3 gtr reg int t4\nbranch on reg int32_t t5 to auto label label2}"];
-140204191968016 -> 140204191910480 [label="{global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191968016 -> 140204191908560 [style=dashed,label="{global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191910480 [label="BB140204191910480{\nreg int t10 <- global int x; _g_x: def byte 4\nprint reg int t10\nbranch  to auto label label1}"];
-140204191910480 -> 140204191910928 [style=dashed,label="{global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191908560 [label="BB140204191908560{\n[auto label label2]\nlabel2: <class 'ir.EmptyStat'> 140204191058832 {
-parent = 140204191908496
-}\nreg int t6 <- global int x; _g_x: def byte 4\nreg int t8 <- minus reg int t6\nprint reg int t8}"];
-140204191908560 -> 140204191910928 [label="{global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191910928 [label="BB140204191910928{\n[auto label label1]\nlabel1: <class 'ir.EmptyStat'> 140204192037264 {
-parent = 140204191908496
+130527073108768 [label="BB130527073108768{\nreg int t0 <- 1\nreg int t1 <- minus reg int t0\nglobal int x; _g_x: def byte 4 <- reg int t1\nread reg int t2\nglobal int x; _g_x: def byte 4 <- reg int t2\nreg int t3 <- global int x; _g_x: def byte 4\nreg int t4 <- 100\nreg int32_t t5 <- reg int t3 gtr reg int t4\nbranch on reg int32_t t5 to auto label label2}"];
+130527073108768 -> 130527073108432 [label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073108768 -> 130527073108816 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073108432 [label="BB130527073108432{\nreg int t7 <- global int x; _g_x: def byte 4\nprint reg int t7\nbranch  to auto label label1}"];
+130527073108432 -> 130527073108288 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global int squ; _g_squ: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073108816 [label="BB130527073108816{\n[auto label label2]\nlabel2: <class 'ir.EmptyStat'> 130527073117168 {
+parent = 130527075054512
+}\nreg int t8 <- global int x; _g_x: def byte 4\nreg int t10 <- minus reg int t8\nprint reg int t10}"];
+130527073108816 -> 130527073108288 [label="{global char[5] arr; _g_arr: def byte 5, global int squ; _g_squ: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073108288 [label="BB130527073108288{\n[auto label label1]\nlabel1: <class 'ir.EmptyStat'> 130527073116832 {
+parent = 130527075054512
 }\nreg int t11 <- 1\nglobal int x; _g_x: def byte 4 <- reg int t11}"];
-140204191910928 -> 140204191909456 [label="{global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191909456 [label="BB140204191909456{\n[auto label label3]\nlabel3: <class 'ir.EmptyStat'> 140204191965584 {
-parent = 140204191908496
-}\nreg int t12 <- global int x; _g_x: def byte 4\nreg int t13 <- 10\nreg int32_t t14 <- reg int t12 leq reg int t13\nbranch on not reg int32_t t14 to auto label label4}"];
-140204191909456 -> 140204191910544 [label="{global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191909456 -> 140204191908368 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191910544 [label="BB140204191910544{\ncall  to auto function square\nreg int t15 <- global int x; _g_x: def byte 4\nreg int t16 <- 1\nreg int32_t t17 <- reg int t15 plus reg int t16\nglobal int x; _g_x: def byte 4 <- reg int32_t t17\nreg int t19 <- global int squ; _g_squ: def byte 4\nprint reg int t19\nbranch  to auto label label3}"];
-140204191910544 -> 140204191909456 [style=dashed,label="{global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191908368 [label="BB140204191908368{\n[auto label label4]\nlabel4: <class 'ir.EmptyStat'> 140204192004304 {
-parent = 140204191908496
+130527073108288 -> 130527073109104 [label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4}"];
+130527073109104 [label="BB130527073109104{\n[auto label label3]\nlabel3: <class 'ir.EmptyStat'> 130527073109584 {
+parent = 130527075054512
+}\nreg int t17 <- global int x; _g_x: def byte 4\nreg int t18 <- 10\nreg int32_t t19 <- reg int t17 leq reg int t18\nbranch on not reg int32_t t19 to auto label label4}"];
+130527073109104 -> 130527073108864 [label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4}"];
+130527073109104 -> 130527073108528 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073108864 [label="BB130527073108864{\ncall  to auto function square\nreg int t12 <- global int x; _g_x: def byte 4\nreg int t13 <- 1\nreg int32_t t14 <- reg int t12 plus reg int t13\nglobal int x; _g_x: def byte 4 <- reg int32_t t14\nreg int t16 <- global int squ; _g_squ: def byte 4\nprint reg int t16\nbranch  to auto label label3}"];
+130527073108864 -> 130527073109104 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int squ; _g_squ: def byte 4}"];
+130527073108528 [label="BB130527073108528{\n[auto label label4]\nlabel4: <class 'ir.EmptyStat'> 130527073110208 {
+parent = 130527075054512
 }\nreg int t20 <- 101\nglobal int x; _g_x: def byte 4 <- reg int t20}"];
-140204191908368 -> 140204191911568 [label="{global int x; _g_x: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191911568 [label="BB140204191911568{\n[auto label label5]\nlabel5: <class 'ir.EmptyStat'> 140204191966992 {
-parent = 140204191908496
-}\nreg int t21 <- global int x; _g_x: def byte 4\nreg int t22 <- 105\nreg int32_t t23 <- reg int t21 leq reg int t22\nbranch on not reg int32_t t23 to auto label label6}"];
-140204191911568 -> 140204191910416 [label="{global int x; _g_x: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191911568 -> 140204191909648 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191910416 [label="BB140204191910416{\nreg int t24 <- global int x; _g_x: def byte 4\nreg int t25 <- global int x; _g_x: def byte 4\nreg int t26 <- 100\nreg int32_t t27 <- reg int t25 minus reg int t26\nreg int t28 <- 1\nreg int32_t t29 <- reg int32_t t27 times reg int t28\nreg &char t30 <- &(global char[5] arr; _g_arr: def byte 5)\nreg &char t31 <- reg &char t30 plus reg int32_t t29\n[reg &char t31] <- reg int t24\nreg int t32 <- global int x; _g_x: def byte 4\nreg int t33 <- 100\nreg int32_t t34 <- reg int t32 minus reg int t33\nreg int t35 <- 1\nreg int32_t t37 <- reg int32_t t34 times reg int t35\nreg &char t42 <- &(global char[5] arr; _g_arr: def byte 5)\nreg &char t43 <- reg &char t42 plus reg int32_t t37\nreg char t41 <- [reg &char t43]\nprint reg char t41\nreg int t44 <- global int x; _g_x: def byte 4\nreg int t45 <- 1\nreg int32_t t46 <- reg int t44 plus reg int t45\nglobal int x; _g_x: def byte 4 <- reg int32_t t46\nbranch  to auto label label5}"];
-140204191910416 -> 140204191911568 [style=dashed,label="{global int x; _g_x: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191909648 [label="BB140204191909648{\n[auto label label6]\nlabel6: <class 'ir.EmptyStat'> 140204190993744 {
-parent = 140204191908496
+130527073108528 -> 130527073109488 [label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073109488 [label="BB130527073109488{\n[auto label label5]\nlabel5: <class 'ir.EmptyStat'> 130527073108384 {
+parent = 130527075054512
+}\nreg int t44 <- global int x; _g_x: def byte 4\nreg int t45 <- 105\nreg int32_t t46 <- reg int t44 leq reg int t45\nbranch on not reg int32_t t46 to auto label label6}"];
+130527073109488 -> 130527073109248 [label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073109488 -> 130527073109296 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073109248 [label="BB130527073109248{\nreg int t26 <- global int x; _g_x: def byte 4\nreg int t21 <- global int x; _g_x: def byte 4\nreg int t22 <- 100\nreg int32_t t23 <- reg int t21 minus reg int t22\nreg int t24 <- 1\nreg int32_t t25 <- reg int32_t t23 times reg int t24\nreg &char t27 <- &(global char[5] arr; _g_arr: def byte 5)\nreg &char t28 <- reg &char t27 plus reg int32_t t25\n[reg &char t28] <- reg int t26\nreg int t29 <- global int x; _g_x: def byte 4\nreg int t30 <- 100\nreg int32_t t31 <- reg int t29 minus reg int t30\nreg int t32 <- 1\nreg int32_t t34 <- reg int32_t t31 times reg int t32\nreg &char t39 <- &(global char[5] arr; _g_arr: def byte 5)\nreg &char t40 <- reg &char t39 plus reg int32_t t34\nreg char t38 <- [reg &char t40]\nprint reg char t38\nreg int t41 <- global int x; _g_x: def byte 4\nreg int t42 <- 1\nreg int32_t t43 <- reg int t41 plus reg int t42\nglobal int x; _g_x: def byte 4 <- reg int32_t t43\nbranch  to auto label label5}"];
+130527073109248 -> 130527073109488 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527073109296 [label="BB130527073109296{\n[auto label label6]\nlabel6: <class 'ir.EmptyStat'> 130527073122208 {
+parent = 130527075054512
 }\nreg int t47 <- 1\nglobal int x; _g_x: def byte 4 <- reg int t47\nreg int t48 <- 1\nglobal int y; _g_y: def byte 4 <- reg int t48}"];
-140204191909648 -> 140204191911888 [label="{global int y; _g_y: def byte 4, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191911888 [label="BB140204191911888{\n[auto label label9]\nlabel9: <class 'ir.EmptyStat'> 140204191966288 {
-parent = 140204191908496
-}\nreg int t49 <- global int x; _g_x: def byte 4\nreg int t50 <- 5\nreg int32_t t51 <- reg int t49 leq reg int t50\nbranch on not reg int32_t t51 to auto label label10}"];
-140204191911888 -> 140204191910864 [label="{global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50, global int y; _g_y: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191911888 -> 140204191966480 [style=dashed,label="set()"];
-140204191910864 [label="BB140204191910864{\n[auto label label7]\nlabel7: <class 'ir.EmptyStat'> 140204191966672 {
-parent = 140204191908496
-}\nreg int t52 <- global int y; _g_y: def byte 4\nreg int t53 <- 5\nreg int32_t t54 <- reg int t52 leq reg int t53\nbranch on not reg int32_t t54 to auto label label8}"];
-140204191910864 -> 140204191911376 [label="{global int y; _g_y: def byte 4, global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50, global char[5] arr; _g_arr: def byte 5}"];
-140204191910864 -> 140204191910672 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global int y; _g_y: def byte 4, global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
-140204191911376 [label="BB140204191911376{\nreg int t55 <- global int x; _g_x: def byte 4\nreg int t56 <- 1\nreg int32_t t58 <- reg int t55 times reg int t56\nreg &char t60 <- &(global char[5] arr; _g_arr: def byte 5)\nreg &char t61 <- reg &char t60 plus reg int32_t t58\nreg char t59 <- [reg &char t61]\nreg int t62 <- global int x; _g_x: def byte 4\nreg int t63 <- 10\nreg int32_t t64 <- reg int t62 times reg int t63\nreg int t65 <- global int y; _g_y: def byte 4\nreg int t66 <- 2\nreg int32_t t67 <- reg int t65 times reg int t66\nreg int32_t t68 <- reg int32_t t64 plus reg int32_t t67\nreg &short t69 <- &(global short[5, 5] multid; _g_multid: def byte 50)\nreg &short t70 <- reg &short t69 plus reg int32_t t68\n[reg &short t70] <- reg char t59\nreg int t71 <- global int x; _g_x: def byte 4\nreg int t72 <- 10\nreg int32_t t73 <- reg int t71 times reg int t72\nreg int t74 <- global int y; _g_y: def byte 4\nreg int t75 <- 2\nreg int32_t t76 <- reg int t74 times reg int t75\nreg int32_t t78 <- reg int32_t t73 plus reg int32_t t76\nreg &short t83 <- &(global short[5, 5] multid; _g_multid: def byte 50)\nreg &short t84 <- reg &short t83 plus reg int32_t t78\nreg short t82 <- [reg &short t84]\nprint reg short t82\nreg int t85 <- global int x; _g_x: def byte 4\nreg int t86 <- 1\nreg int32_t t87 <- reg int t85 plus reg int t86\nglobal int x; _g_x: def byte 4 <- reg int32_t t87\nreg int t88 <- global int y; _g_y: def byte 4\nreg int t89 <- 1\nreg int32_t t90 <- reg int t88 plus reg int t89\nglobal int y; _g_y: def byte 4 <- reg int32_t t90\nbranch  to auto label label7}"];
-140204191911376 -> 140204191910864 [style=dashed,label="{global int x; _g_x: def byte 4, global short[5, 5] multid; _g_multid: def byte 50, global int y; _g_y: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191910672 [label="BB140204191910672{\n[auto label label8]\nlabel8: <class 'ir.EmptyStat'> 140204191057936 {
-parent = 140204191908496
+130527073109296 -> 130527073108672 [label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
+130527073108672 [label="BB130527073108672{\n[auto label label9]\nlabel9: <class 'ir.EmptyStat'> 130527073122448 {
+parent = 130527075054512
+}\nreg int t88 <- global int x; _g_x: def byte 4\nreg int t89 <- 5\nreg int32_t t90 <- reg int t88 leq reg int t89\nbranch on not reg int32_t t90 to auto label label10}"];
+130527073108672 -> 130527073108720 [label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
+130527073108672 -> 130527073108912 [style=dashed,label="set()"];
+130527073108720 [label="BB130527073108720{\n[auto label label7]\nlabel7: <class 'ir.EmptyStat'> 130527073108096 {
+parent = 130527075054512
+}\nreg int t85 <- global int y; _g_y: def byte 4\nreg int t86 <- 5\nreg int32_t t87 <- reg int t85 leq reg int t86\nbranch on not reg int32_t t87 to auto label label8}"];
+130527073108720 -> 130527075054320 [label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
+130527073108720 -> 130527075054272 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
+130527075054320 [label="BB130527075054320{\nreg int t56 <- global int x; _g_x: def byte 4\nreg int t57 <- 1\nreg int32_t t59 <- reg int t56 times reg int t57\nreg &char t61 <- &(global char[5] arr; _g_arr: def byte 5)\nreg &char t62 <- reg &char t61 plus reg int32_t t59\nreg char t60 <- [reg &char t62]\nreg int t49 <- global int x; _g_x: def byte 4\nreg int t50 <- 10\nreg int32_t t51 <- reg int t49 times reg int t50\nreg int t52 <- global int y; _g_y: def byte 4\nreg int t53 <- 2\nreg int32_t t54 <- reg int t52 times reg int t53\nreg int32_t t55 <- reg int32_t t51 plus reg int32_t t54\nreg &short t63 <- &(global short[5, 5] multid; _g_multid: def byte 50)\nreg &short t64 <- reg &short t63 plus reg int32_t t55\n[reg &short t64] <- reg char t60\nreg int t65 <- global int x; _g_x: def byte 4\nreg int t66 <- 10\nreg int32_t t67 <- reg int t65 times reg int t66\nreg int t68 <- global int y; _g_y: def byte 4\nreg int t69 <- 2\nreg int32_t t70 <- reg int t68 times reg int t69\nreg int32_t t72 <- reg int32_t t67 plus reg int32_t t70\nreg &short t77 <- &(global short[5, 5] multid; _g_multid: def byte 50)\nreg &short t78 <- reg &short t77 plus reg int32_t t72\nreg short t76 <- [reg &short t78]\nprint reg short t76\nreg int t79 <- global int x; _g_x: def byte 4\nreg int t80 <- 1\nreg int32_t t81 <- reg int t79 plus reg int t80\nglobal int x; _g_x: def byte 4 <- reg int32_t t81\nreg int t82 <- global int y; _g_y: def byte 4\nreg int t83 <- 1\nreg int32_t t84 <- reg int t82 plus reg int t83\nglobal int y; _g_y: def byte 4 <- reg int32_t t84\nbranch  to auto label label7}"];
+130527075054320 -> 130527073108720 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
+130527075054272 [label="BB130527075054272{\n[auto label label8]\nlabel8: <class 'ir.EmptyStat'> 130527073214896 {
+parent = 130527075054512
 }\nbranch  to auto label label9}"];
-140204191910672 -> 140204191911888 [style=dashed,label="{global int y; _g_y: def byte 4, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
-140204191966480 [label="BB140204191966480{\n[auto label label10]\nlabel10: <class 'ir.EmptyStat'> 140204191058384 {
-parent = 140204191908496
+130527075054272 -> 130527073108672 [style=dashed,label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
+130527073108912 [label="BB130527073108912{\n[auto label label10]\nlabel10: <class 'ir.EmptyStat'> 130527073216000 {
+parent = 130527075054512
 }}"];
-140204191966480 -> exit140204191412912 [label="set()"];
-140204191909712 [label="BB140204191909712{\nreg int t91 <- 1234\nauto int test; _l_square_test: fp + (-4) [def byte 4] <- reg int t91\nreg int t92 <- global int x; _g_x: def byte 4\nreg int t93 <- global int x; _g_x: def byte 4\nreg int32_t t94 <- reg int t92 times reg int t93\nglobal int squ; _g_squ: def byte 4 <- reg int32_t t94}"];
-140204191909712 -> exit140204191908432 [label="{global short[5, 5] multid; _g_multid: def byte 50, global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
+130527073108912 -> exit130527074333584 [label="set()"];
+130527075056384 [label="BB130527075056384{\nreg int t91 <- 1234\nauto int test; _l_square_test: fp + (-4) [def byte 4] <- reg int t91\nreg int t92 <- global int x; _g_x: def byte 4\nreg int t93 <- global int x; _g_x: def byte 4\nreg int32_t t94 <- reg int t92 times reg int t93\nglobal int squ; _g_squ: def byte 4 <- reg int32_t t94}"];
+130527075056384 -> exit130527075054464 [label="{global char[5] arr; _g_arr: def byte 5, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
 main [shape=box];
-main -> 140204191968016 [label="{global int squ; _g_squ: def byte 4, global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50}"];
+main -> 130527073108768 [label="{global char[5] arr; _g_arr: def byte 5, global int squ; _g_squ: def byte 4, global short[5, 5] multid; _g_multid: def byte 50}"];
 square [shape=box];
-square -> 140204191909712 [label="{global int y; _g_y: def byte 4, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global char[5] arr; _g_arr: def byte 5}"];
+square -> 130527075056384 [label="{global char[5] arr; _g_arr: def byte 5, global short[5, 5] multid; _g_multid: def byte 50, global int x; _g_x: def byte 4, global int y; _g_y: def byte 4}"];
 }
