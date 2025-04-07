@@ -65,12 +65,12 @@ def driver_main():
     test_program=__test_program
     import sys
     print(sys.argv)
-    if len(sys.argv) >= 2:
+    if len(sys.argv) > 2:
         with open(sys.argv[1], 'r') as inf :
             test_program = inf.read()
     code = compile_program(test_program)
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) >= 2:
         with open(sys.argv[-1], 'w') as outf :
             outf.write(code)
 
