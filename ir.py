@@ -488,6 +488,17 @@ class ForStat(Stat):  # incomplete
         self.cond.parent = self
         self.step.parent = self
         self.body.parent = self
+    
+    def lower(self):
+        entry_label = TYPENAMES['label']()
+        exit_label = TYPENAMES['label']()
+        exit_stat = EmptyStat(self.parent, symtab=self.symtab)
+        exit_stat.set_label(exit_label)
+        self.cond.set_label(entry_label)
+        branch = BranchStat(None, self.cond.destination(), exit_label, self.symtab, negcond=True)
+        loop = BranchStat(None, None, entry_label, self.symtab)
+        stat_list = StatList(self.parent, [self.init, self.cond, branch, self.body, self.step, loop, exit_stat], self.symtab)
+        return self.parent.replace(self, stat_list)
 
 
 class AssignStat(Stat):

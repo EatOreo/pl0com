@@ -25,6 +25,7 @@ TOKEN_DEFS = {
     'endsym': ['end'],
     'ifsym': ['if'],
     'whilesym': ['while'],
+    'forsym': ['for'],
     'becomes': [':='],
     'thensym': ['then'],
     'elsesym': ['else'],

@@ -164,6 +164,25 @@ class Parser:
             self.expect('dosym')
             body = self.statement(symtab)
             return ir.WhileStat(cond=cond, body=body, symtab=symtab)
+        elif self.accept('forsym'):
+            """
+            for i := 1, i < 10, i++ begin
+                {body}
+            end;
+            """
+            self.expect('ident')
+            target = symtab.find(self.value)
+            offset = self.array_offset(symtab)
+            self.expect('becomes')
+            expr = self.expression(symtab)
+            init = ir.AssignStat(target=target, offset=offset, expr=expr, symtab=symtab)
+
+            self.expect('comma')
+            cond = self.condition(symtab)
+            self.expect('comma')
+            step = self.statement(symtab)
+            body = self.statement(symtab)
+            return ir.ForStat(init=init, cond=cond, step=step, body = body, symtab=symtab)
         elif self.accept('print'):
             exp = self.expression(symtab)
             return ir.PrintStat(exp=exp, symtab=symtab)
