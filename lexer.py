@@ -13,6 +13,8 @@ TOKEN_DEFS = {
     'slash': ['/'],
     'plus': ['+'],
     'minus': ['-'],
+    'plusplus': ['++'],
+    'minusminus': ['--'],
     'eql': ['='],
     'neq': ['!='],
     'lss': ['<'],

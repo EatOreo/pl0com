@@ -1,4 +1,7 @@
-var i;
-for i := 3, i < 8, i := i + 1 begin
-   print i
+var i, x;
+begin
+   read x;
+   for i := 0, i < x, i++ begin
+      print i
+   end
 end

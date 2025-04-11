@@ -136,6 +136,12 @@ class Parser:
         if self.accept('ident'):
             target = symtab.find(self.value)
             offset = self.array_offset(symtab)
+            if self.accept('plusplus'):
+                expr = ir.BinExpr(children=['plus', ir.Var(var=target, symtab=symtab), ir.Const(value=1, symtab=symtab)], symtab=symtab)
+                return ir.AssignStat(target=target, offset=offset, expr=expr, symtab=symtab) 
+            if self.accept('minusminus'):
+                expr = ir.BinExpr(children=['minus', ir.Var(var=target, symtab=symtab), ir.Const(value=1, symtab=symtab)], symtab=symtab)
+                return ir.AssignStat(target=target, offset=offset, expr=expr, symtab=symtab) 
             self.expect('becomes')
             expr = self.expression(symtab)
             return ir.AssignStat(target=target, offset=offset, expr=expr, symtab=symtab)
