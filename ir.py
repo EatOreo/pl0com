@@ -186,7 +186,7 @@ class IRNode:  # abstract
             pass
 
         attrs = {'body', 'cond', 'value', 'thenpart', 'elsepart', 'symbol', 'call', 'step', 'expr', 'target', 'defs',
-                 'global_symtab', 'local_symtab', 'offset'} & set(dir(self))
+                 'global_symtab', 'local_symtab', 'offset', 'init'} & set(dir(self))
 
         res = repr(type(self)) + ' ' + repr(id(self)) + ' {\n'
         if self.parent is not None:
@@ -214,7 +214,7 @@ class IRNode:  # abstract
 
     def navigate(self, action):
         attrs = {'body', 'cond', 'value', 'thenpart', 'elsepart', 'symbol', 'call', 'step', 'expr', 'target', 'defs',
-                 'global_symtab', 'local_symtab', 'offset'} & set(dir(self))
+                 'global_symtab', 'local_symtab', 'offset', 'init'} & set(dir(self))
         if 'children' in dir(self) and len(self.children):
             print('navigating children of', type(self), id(self), len(self.children))
             for node in self.children:
@@ -236,7 +236,7 @@ class IRNode:  # abstract
             self.children[self.children.index(old)] = new
             return True
         attrs = {'body', 'cond', 'value', 'thenpart', 'elsepart', 'symbol', 'call', 'step', 'expr', 'target', 'defs',
-                 'global_symtab', 'local_symtab', 'offset'} & set(dir(self))
+                 'global_symtab', 'local_symtab', 'offset', 'init'} & set(dir(self))
         for d in attrs:
             try:
                 if getattr(self, d) == old:

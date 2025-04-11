@@ -170,13 +170,7 @@ class Parser:
                 {body}
             end;
             """
-            self.expect('ident')
-            target = symtab.find(self.value)
-            offset = self.array_offset(symtab)
-            self.expect('becomes')
-            expr = self.expression(symtab)
-            init = ir.AssignStat(target=target, offset=offset, expr=expr, symtab=symtab)
-
+            init = self.statement(symtab)
             self.expect('comma')
             cond = self.condition(symtab)
             self.expect('comma')
