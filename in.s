@@ -1,7 +1,6 @@
-var i, x;
+var i;
 begin
-   read x;
-   for i := 0, i < x, i++ begin
+   for i := 0, i < 5, i++ begin
       print i
    end
 end

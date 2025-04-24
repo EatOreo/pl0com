@@ -477,7 +477,7 @@ class WhileStat(Stat):
         return self.parent.replace(self, stat_list)
 
 
-class ForStat(Stat):  # incomplete
+class ForStat(Stat):
     def __init__(self, parent=None, init=None, cond=None, step=None, body=None, symtab=None):
         super().__init__(parent, [], symtab)
         self.init = init
@@ -488,6 +488,29 @@ class ForStat(Stat):  # incomplete
         self.cond.parent = self
         self.step.parent = self
         self.body.parent = self
+
+    def loop_unroll(self):
+        if type(self.init.expr) is Const:
+            # TODO: check what kind of comparison in condition
+            # TODO: check what kind of step is used
+            # TODO: check body does not change iterator
+            iter = self.init.symbol
+            init_val = self.init.expr.value
+            cond = self.cond.children
+            if cond[1].symbol == iter and type(cond[2]) is Const:
+                end_val = cond[2].value
+                def replace_symbol_with_constant(node):
+                    if type(node) is Var and node.symbol == iter:
+                        node.parent.replace(node, Const(value = 1)) # TODO: replace with different constant and duplicate body
+                    if hasattr(node, 'children') and node.children:
+                        for child in node.children:
+                            replace_symbol_with_constant(child)
+                    if hasattr(node, 'expr'):
+                        replace_symbol_with_constant(node.expr)
+
+                replace_symbol_with_constant(self.body)
+                    
+        return self
     
     def lower(self):
         entry_label = TYPENAMES['label']()
@@ -845,7 +868,7 @@ class StatList(Stat):  # low-level node
         for n in self.children:
             print(id(n), end=' ')
         print(']')
-
+    
     def flatten(self):
         """Remove nested StatLists"""
         if type(self.parent) == StatList:

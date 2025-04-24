@@ -43,6 +43,13 @@ def get_symbol_tables(root):
     root.navigate(register_nodes(node_list))
     return node_list
 
+def loop_unrolling(node):
+    try:
+        check = node.loop_unroll()
+    except Exception as e:
+        print('Cannot loop unroll', id(node), type(node), e)
+        pass
+
 
 def lowering(node):
     """Lowering action for a node

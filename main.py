@@ -23,6 +23,8 @@ def compile_program(text):
     for n in node_list:
         print(type(n), id(n), '->', type(n.parent), id(n.parent))
     print('\nTotal nodes in IR:', len(node_list), '\n')
+    
+    res.navigate(loop_unrolling)
 
     res.navigate(lowering)
 
