@@ -491,24 +491,59 @@ class ForStat(Stat):
 
     def loop_unroll(self):
         if type(self.init.expr) is Const:
-            # TODO: check what kind of comparison in condition
-            # TODO: check what kind of step is used
-            # TODO: check body does not change iterator
+            def check_iterator_modification(node):
+                if type(node) is AssignStat and node.symbol.name == iter.name:
+                    return self
+                if hasattr(node, 'children') and node.children:
+                    for child in node.children:
+                        check_iterator_modification(child)
+                if hasattr(node, 'expr'):
+                    check_iterator_modification(node.expr)
+            check_iterator_modification(self.body)
+
+            stepsym = self.step.expr.children[0]
+            if stepsym != "plus" and stepsym != "minus":
+                return self
+
             iter = self.init.symbol
             init_val = self.init.expr.value
             cond = self.cond.children
+
             if cond[1].symbol == iter and type(cond[2]) is Const:
                 end_val = cond[2].value
-                def replace_symbol_with_constant(node):
-                    if type(node) is Var and node.symbol == iter:
-                        node.parent.replace(node, Const(value = 1)) # TODO: replace with different constant and duplicate body
+                if (stepsym == "plus" and end_val < init_val) or (stepsym == "minus" and end_val > init_val):
+                    return self
+                step_val = self.step.expr.children[2].value
+                if step_val != 0 and ((step_val > 0 and init_val < end_val) or (step_val < 0 and init_val > end_val)):
+                    num_iterations = abs((end_val - init_val) // step_val)
+                    if num_iterations > 1000:
+                        return self # TODO: unroll the loop to a new loop bigger body with fewer iteration
+                else:
+                    return self
+            else:
+                return self
+            if cond[1].symbol == iter and type(cond[2]) is Const:
+                end_val = cond[2].value
+                def replace_symbol_with_constant(node, cval):
+                    if type(node) is Var and node.symbol.name == iter.name:
+                        node.parent.replace(node, Const(value = cval))
                     if hasattr(node, 'children') and node.children:
                         for child in node.children:
-                            replace_symbol_with_constant(child)
+                            replace_symbol_with_constant(child, cval)
                     if hasattr(node, 'expr'):
-                        replace_symbol_with_constant(node.expr)
+                        replace_symbol_with_constant(node.expr, cval)
 
-                replace_symbol_with_constant(self.body)
+                from copy import deepcopy
+                stats = []
+                for i in range(init_val, end_val, self.step.expr.children[2].value):
+                    body = deepcopy(self.body)
+                    replace_symbol_with_constant(body, i)
+                    stats.append(body)
+
+                stats.append(PrintStat(exp=Const(value=-1009))) #-1009 means that loop unrolling was used
+
+                stat_list = StatList(self.parent, stats, self.symtab)
+                return self.parent.replace(self, stat_list)
                     
         return self
     
