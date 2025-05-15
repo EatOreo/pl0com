@@ -24,6 +24,7 @@ def compile_program(text):
         print(type(n), id(n), '->', type(n.parent), id(n.parent))
     print('\nTotal nodes in IR:', len(node_list), '\n')
     
+    res.navigate(strip_mining)
     res.navigate(loop_unrolling)
 
     res.navigate(lowering)

@@ -7,6 +7,7 @@ have a lowering function or a code generation function (codegen functions are
 in a separate module though)."""
 
 from codegenhelp import *
+from copy import deepcopy
 
 # UTILITIES
 
@@ -489,6 +490,17 @@ class ForStat(Stat):
         self.step.parent = self
         self.body.parent = self
 
+    def strip_mine(self):
+        #expr = BinExpr(children=['plus', Var(var=target, symtab=symtab), ir.Const(value=1, symtab=symtab)], symtab=symtab)
+        #innerloop = ForStat(self, AssignStat(target=tar, offset=offset, expr=expr, symtab=self.symtab))
+        tar = Symbol("j", TYPENAMES['int'])
+        innerloop = deepcopy(self)
+        innerloop.symtab.append(tar)
+        innerloop.init.expr = self.cond.children[1]
+        innerloop.cond.children[1].symbol = tar
+        innerloop.cond.children[2] = BinExpr(innerloop, []) # TODO:
+        return self
+
     def loop_unroll(self):
         if type(self.init.expr) is Const:
             def check_iterator_modification(node):
@@ -533,7 +545,6 @@ class ForStat(Stat):
                     if hasattr(node, 'expr'):
                         replace_symbol_with_constant(node.expr, cval)
 
-                from copy import deepcopy
                 stats = []
                 for i in range(init_val, end_val, self.step.expr.children[2].value):
                     body = deepcopy(self.body)

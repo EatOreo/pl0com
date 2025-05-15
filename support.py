@@ -43,6 +43,13 @@ def get_symbol_tables(root):
     root.navigate(register_nodes(node_list))
     return node_list
 
+def strip_mining(node):
+    try:
+        check = node.strip_mine()
+    except Exception as e:
+        print('Cannot strip mine', id(node), type(node), e)
+        pass 
+
 def loop_unrolling(node):
     try:
         check = node.loop_unroll()
