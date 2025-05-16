@@ -120,7 +120,7 @@ class LinearScanRegisterAllocator(object):
 
         for v in vars:
             gen = min_gen[v]
-            kill = max_use[v]
+            kill = max_use[v] # + 1
             self.varliveness.insert(0, {"var": v, "interv": range(gen, kill)})
         self.varliveness.sort(key=lambda x: x['interv'][0])
         self.allvars = list(vars)

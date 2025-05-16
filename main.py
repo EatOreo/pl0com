@@ -25,7 +25,7 @@ def compile_program(text):
     print('\nTotal nodes in IR:', len(node_list), '\n')
     
     res.navigate(strip_mining)
-    res.navigate(loop_unrolling)
+    #res.navigate(loop_unrolling)
 
     res.navigate(lowering)
 

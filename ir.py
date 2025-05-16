@@ -493,12 +493,30 @@ class ForStat(Stat):
     def strip_mine(self):
         #expr = BinExpr(children=['plus', Var(var=target, symtab=symtab), ir.Const(value=1, symtab=symtab)], symtab=symtab)
         #innerloop = ForStat(self, AssignStat(target=tar, offset=offset, expr=expr, symtab=self.symtab))
-        tar = Symbol("j", TYPENAMES['int'])
+        #tar = Symbol("j", TYPENAMES['int'])
+        tar = next(sym for sym in self.symtab if sym.name == "j") 
         innerloop = deepcopy(self)
-        innerloop.symtab.append(tar)
-        innerloop.init.expr = self.cond.children[1]
+        innerloop.symtab = self.symtab
+        innerloop.body.symtab = innerloop.symtab
+        #innerloop.symtab.append(tar)
+        i = self.cond.children[1]
+        innerloop.init.symbol = tar
+        innerloop.init.expr = i
+        innerloop.step.symbol = tar
         innerloop.cond.children[1].symbol = tar
-        innerloop.cond.children[2] = BinExpr(innerloop, []) # TODO:
+        innerloop.cond.children[2] = BinExpr(innerloop, ['plus', i, Const(value=4)])
+        def replace_with_tar(node):
+            if type(node) is Var and node.symbol.name == i.symbol.name:
+                node.parent.replace(node, Var(node.parent, tar, node.symtab))
+            if hasattr(node, 'children') and node.children:
+                for child in node.children:
+                    replace_with_tar(child)
+            if hasattr(node, 'expr'):
+                replace_with_tar(node.expr)
+        replace_with_tar(innerloop.body)
+        innerloop.body = StatList(innerloop, [innerloop.body, PrintStat(exp=Const(value=-3010))], innerloop.symtab) #-3010 means strip mine
+        self.step.expr.children[2].value *= 4
+        self.body = innerloop
         return self
 
     def loop_unroll(self):
@@ -563,7 +581,7 @@ class ForStat(Stat):
         exit_label = TYPENAMES['label']()
         exit_stat = EmptyStat(self.parent, symtab=self.symtab)
         exit_stat.set_label(exit_label)
-        self.cond.set_label(entry_label)
+        self.cond.set_label(entry_label) #TODO: ERROR HERE when strip mining!! (or line above)
         branch = BranchStat(None, self.cond.destination(), exit_label, self.symtab, negcond=True)
         loop = BranchStat(None, None, entry_label, self.symtab)
         stat_list = StatList(self.parent, [self.init, self.cond, branch, self.body, self.step, loop, exit_stat], self.symtab)
