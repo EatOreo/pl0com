@@ -495,28 +495,33 @@ class ForStat(Stat):
         #innerloop = ForStat(self, AssignStat(target=tar, offset=offset, expr=expr, symtab=self.symtab))
         #tar = Symbol("j", TYPENAMES['int'])
         tar = next(sym for sym in self.symtab if sym.name == "j") 
-        innerloop = deepcopy(self)
-        innerloop.symtab = self.symtab
-        innerloop.body.symtab = innerloop.symtab
+        ilinit = AssignStat(target=tar, expr=Var(var=self.init.symbol, symtab=self.symtab), symtab=self.symtab)
+        ilcond = BinExpr(symtab=self.symtab, children=['lss', Var(var=tar, symtab=self.symtab), BinExpr(symtab=self.symtab, children=["plus", Var(var=self.init.symbol, symtab=self.symtab), Const(value=4)])])
+        ilstep = AssignStat(target=tar, symtab=self.symtab, expr=BinExpr(symtab=self.symtab, children=["plus", Var(var=tar, symtab=self.symtab), Const(value=1)]))
+        il = ForStat(init=ilinit, cond=ilcond, body=self.body, step=ilstep)
+        ilinit.parent = il
+        ilcond.parent = il
+        ilstep.parent = il
+        il.body.parent = il
         #innerloop.symtab.append(tar)
-        i = self.cond.children[1]
-        innerloop.init.symbol = tar
-        innerloop.init.expr = i
-        innerloop.step.symbol = tar
-        innerloop.cond.children[1].symbol = tar
-        innerloop.cond.children[2] = BinExpr(innerloop, ['plus', i, Const(value=4)])
         def replace_with_tar(node):
-            if type(node) is Var and node.symbol.name == i.symbol.name:
+            if type(node) is Var and node.symbol.name == self.init.symbol.name:
                 node.parent.replace(node, Var(node.parent, tar, node.symtab))
             if hasattr(node, 'children') and node.children:
                 for child in node.children:
                     replace_with_tar(child)
             if hasattr(node, 'expr'):
                 replace_with_tar(node.expr)
-        replace_with_tar(innerloop.body)
-        innerloop.body = StatList(innerloop, [innerloop.body, PrintStat(exp=Const(value=-3010))], innerloop.symtab) #-3010 means strip mine
+        replace_with_tar(il.body)
+        epil = (self.cond.children[2].value - self.init.expr.value) % 4
+        self.cond.children[2].value -= epil
         self.step.expr.children[2].value *= 4
-        self.body = innerloop
+        self.body = StatList(self, [il, PrintStat(exp=Const(value=-3010))], self.symtab)
+        stats = [self]
+        for i in range(epil): #TODO: add epilogue (make replace_with_tar outside)
+            copb = deepcopy(il.body)
+            copb 
+            stats.append()
         return self
 
     def loop_unroll(self):
