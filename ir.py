@@ -485,29 +485,9 @@ def replace_symbol(node, old, new):
             replace_symbol(child, old, new)
     if hasattr(node, 'expr'):
         replace_symbol(node.expr, old, new)
+    if hasattr(node, 'body'):
+        replace_symbol(node.body, old, new)
 
-def recursive_apply(node, func):
-    """
-    Recursively applies `func` to all attributes of `node`, except 'parent'.
-    Example usage:
-        # Print all attribute names and values except 'parent'
-        recursive_apply(my_node, lambda attr, value: print(f"{attr}: {value}"))
-    """
-    for attr in dir(node):
-        if attr == 'parent' or attr.startswith('__'):
-            continue
-        try:
-            value = getattr(node, attr)
-        except Exception:
-            continue
-        func(attr, value)
-        # Recurse if value is an IRNode or a list of IRNodes
-        if isinstance(value, IRNode):
-            recursive_apply(value, func)
-        elif isinstance(value, list):
-            for item in value:
-                if isinstance(item, IRNode):
-                    recursive_apply(item, func)
 
 class ForStat(Stat):
     def __init__(self, parent=None, init=None, cond=None, step=None, body=None, symtab=None):
@@ -522,10 +502,11 @@ class ForStat(Stat):
         self.body.parent = self
 
     def strip_mine(self):
-        #expr = BinExpr(children=['plus', Var(var=target, symtab=symtab), ir.Const(value=1, symtab=symtab)], symtab=symtab)
-        #innerloop = ForStat(self, AssignStat(target=tar, offset=offset, expr=expr, symtab=self.symtab))
-        #tar = Symbol("j", TYPENAMES['int'])
-        tar = next(sym for sym in self.symtab if sym.name == "j") 
+        if (self.cond.children[2].value - self.init.expr.value) < 4:
+            return self
+        # tar = Symbol(self.init.symbol.name + '_striptemp', TYPENAMES['int'], alloct='global')
+        # self.symtab.append(tar)
+        tar = next(sym for sym in self.symtab if sym.name == self.init.symbol.name + '_striptemp') 
         ilinit = AssignStat(target=tar, expr=Var(var=self.init.symbol, symtab=self.symtab), symtab=self.symtab)
         ilcond = BinExpr(symtab=self.symtab, children=['lss', Var(var=tar, symtab=self.symtab), BinExpr(symtab=self.symtab, children=["plus", Var(var=self.init.symbol, symtab=self.symtab), Const(value=4)])])
         ilstep = AssignStat(target=tar, symtab=self.symtab, expr=BinExpr(symtab=self.symtab, children=["plus", Var(var=tar, symtab=self.symtab), Const(value=1)]))
@@ -534,7 +515,6 @@ class ForStat(Stat):
         ilcond.parent = il
         ilstep.parent = il
         il.body.parent = il
-        #innerloop.symtab.append(tar)
         replace_symbol(il.body, self.init.symbol, tar)
         epil = (self.cond.children[2].value - self.init.expr.value) % 4
         self.cond.children[2].value -= epil
