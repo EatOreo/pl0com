@@ -543,7 +543,7 @@ class ForStat(Stat):
         stats = [self]
         stat_list = StatList(self.parent, stats, self.symtab)
         self.parent = stat_list
-        for i in range(epil): #TODO: add epilogue (make replace_with_tar outside)
+        for _ in range(epil):
             stat_list.children.append(il.body)
             stat_list.children.append(AssignStat(parent=stat_list, target=tar, symtab=self.symtab, expr=BinExpr(symtab=self.symtab, children=["plus", Var(var=tar, symtab=self.symtab), Const(value=1)])))
         return stat_list.parent.replace(self, stat_list)
