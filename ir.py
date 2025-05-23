@@ -457,7 +457,6 @@ class IfStat(Stat):
             stat_list = StatList(self.parent, [self.cond, branch_to_exit, self.thenpart, exit_stat], self.symtab)
             return self.parent.replace(self, stat_list)
 
-
 class WhileStat(Stat):
     def __init__(self, parent=None, cond=None, body=None, symtab=None):
         super().__init__(parent, [], symtab)
@@ -477,6 +476,38 @@ class WhileStat(Stat):
         stat_list = StatList(self.parent, [self.cond, branch, self.body, loop, exit_stat], self.symtab)
         return self.parent.replace(self, stat_list)
 
+
+def replace_symbol(node, old, new):
+    if type(node) is Var and node.symbol.name == old.name:
+        node.parent.replace(node, Var(node.parent, new, node.symtab))
+    if hasattr(node, 'children') and node.children:
+        for child in node.children:
+            replace_symbol(child, old, new)
+    if hasattr(node, 'expr'):
+        replace_symbol(node.expr, old, new)
+
+def recursive_apply(node, func):
+    """
+    Recursively applies `func` to all attributes of `node`, except 'parent'.
+    Example usage:
+        # Print all attribute names and values except 'parent'
+        recursive_apply(my_node, lambda attr, value: print(f"{attr}: {value}"))
+    """
+    for attr in dir(node):
+        if attr == 'parent' or attr.startswith('__'):
+            continue
+        try:
+            value = getattr(node, attr)
+        except Exception:
+            continue
+        func(attr, value)
+        # Recurse if value is an IRNode or a list of IRNodes
+        if isinstance(value, IRNode):
+            recursive_apply(value, func)
+        elif isinstance(value, list):
+            for item in value:
+                if isinstance(item, IRNode):
+                    recursive_apply(item, func)
 
 class ForStat(Stat):
     def __init__(self, parent=None, init=None, cond=None, step=None, body=None, symtab=None):
@@ -504,25 +535,18 @@ class ForStat(Stat):
         ilstep.parent = il
         il.body.parent = il
         #innerloop.symtab.append(tar)
-        def replace_with_tar(node):
-            if type(node) is Var and node.symbol.name == self.init.symbol.name:
-                node.parent.replace(node, Var(node.parent, tar, node.symtab))
-            if hasattr(node, 'children') and node.children:
-                for child in node.children:
-                    replace_with_tar(child)
-            if hasattr(node, 'expr'):
-                replace_with_tar(node.expr)
-        replace_with_tar(il.body)
+        replace_symbol(il.body, self.init.symbol, tar)
         epil = (self.cond.children[2].value - self.init.expr.value) % 4
         self.cond.children[2].value -= epil
         self.step.expr.children[2].value *= 4
         self.body = StatList(self, [il, PrintStat(exp=Const(value=-3010))], self.symtab)
         stats = [self]
+        stat_list = StatList(self.parent, stats, self.symtab)
+        self.parent = stat_list
         for i in range(epil): #TODO: add epilogue (make replace_with_tar outside)
-            copb = deepcopy(il.body)
-            copb 
-            stats.append()
-        return self
+            stat_list.children.append(il.body)
+            stat_list.children.append(AssignStat(parent=stat_list, target=tar, symtab=self.symtab, expr=BinExpr(symtab=self.symtab, children=["plus", Var(var=tar, symtab=self.symtab), Const(value=1)])))
+        return stat_list.parent.replace(self, stat_list)
 
     def loop_unroll(self):
         if type(self.init.expr) is Const:
