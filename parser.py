@@ -182,7 +182,7 @@ class Parser:
             self.expect('comma')
             step = self.statement(symtab)
             body = self.statement(symtab)
-            symtab.append(ir.Symbol(init.symbol.name + '_striptemp',ir.TYPENAMES['int'], alloct='auto'))
+            # symtab.append(ir.Symbol(init.symbol.name + '_striptemp', "alloct='auto'))
             return ir.ForStat(init=init, cond=cond, step=step, body = body, symtab=symtab)
         elif self.accept('print'):
             exp = self.expression(symtab)
